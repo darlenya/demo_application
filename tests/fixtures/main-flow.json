@@ -1,0 +1,37 @@
+{
+	"untar-applications": {
+		"description": "Untars the TAR-Ball containing all the application files",
+
+		"steps": {
+
+			"readFile": {
+				"type": "kronos-adapter-inbound-file",
+
+				"watchDir": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_in",
+				"onlyReadNewFiles": true,
+
+				"endpoints": {
+					"out": "untar/in",
+				}
+			},
+
+
+			"untar": {
+				"type": "kronos-step-archive-tar",
+				"endpoints": {
+					"out": "writeFile/inWriteFile"
+				}
+			},
+
+
+			"writeFile": {
+				"type": "kronos-adapter-outbound-file",
+				"endpoints": {
+					"inWriteFile": "flowOne/out",
+				}
+			}
+
+		}
+
+	}
+}
