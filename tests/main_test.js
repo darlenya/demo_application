@@ -15,12 +15,13 @@ const fixturesDir = path.join(__dirname, 'fixtures');
 
 const ksm = require('kronos-service-manager');
 
+// ***** Warum geht das nicht?????
 ksm.manager().then(manager => {
 	console.log('started');
 }, err => {
 	console.log("err");
 	console.log(err);
-}).catch(function (err) {
+}).catch(function (err) { // ***** Braucht man Catch wenn man in 'then' eine zweite funktion hat?
 	console.log("err");
 	console.log(err);
 });
