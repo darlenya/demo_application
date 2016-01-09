@@ -41,6 +41,6 @@
     "kronos-adapter-inbound-file": "^1.0.1",
     "kronos-adapter-outbound-file": "^1.0.6",
     "kronos-flow": "^1.6.0",
-    "kronos-service-manager": "^2.13.1"
+    "kronos-service-manager": "git+https://github.com/Kronos-Integration/kronos-service-manager.git#with-dummy-promise-hack"
   }
 }

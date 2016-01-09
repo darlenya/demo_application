@@ -11,7 +11,7 @@
 				"onlyReadNewFiles": true,
 
 				"endpoints": {
-					"out": "untar/in",
+					"out": "untar/in"
 				}
 			},
 
@@ -27,7 +27,7 @@
 			"writeFile": {
 				"type": "kronos-adapter-outbound-file",
 				"endpoints": {
-					"inWriteFile": "flowOne/out",
+					"inWriteFile": "flowOne/out"
 				}
 			}
 
