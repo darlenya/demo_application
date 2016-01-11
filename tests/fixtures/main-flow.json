@@ -11,13 +11,13 @@
 				"onlyReadNewFiles": true,
 
 				"endpoints": {
-					"out": "untar/in",
+					"out": "untar/in"
 				}
 			},
 
 
 			"untar": {
-				"type": "kronos-step-archive-tar",
+				"type": "kronos-untar",
 				"endpoints": {
 					"out": "writeFile/inWriteFile"
 				}
@@ -26,9 +26,7 @@
 
 			"writeFile": {
 				"type": "kronos-adapter-outbound-file",
-				"endpoints": {
-					"inWriteFile": "flowOne/out",
-				}
+				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_out"
 			}
 
 		}
