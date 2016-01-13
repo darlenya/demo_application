@@ -1,15 +1,15 @@
 {
 	"untar-applications": {
 		"description": "Untars the TAR-Ball containing all the application files",
+		"endpoints": {
+			"inFileTrigger": "readFile/inFileTrigger"
+		},
 
 		"steps": {
 
 			"readFile": {
 				"type": "kronos-adapter-inbound-file",
-
-				"watchDir": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_in",
 				"onlyReadNewFiles": true,
-
 				"endpoints": {
 					"out": "untar/in"
 				}
@@ -26,7 +26,14 @@
 
 			"writeFile": {
 				"type": "kronos-adapter-outbound-file",
-				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_out"
+				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_out",
+				"endpoints": {
+					"inWriteFile": {
+						"interceptors": [{
+							"type": "write-file-interceptor"
+						}]
+					}
+				}
 			}
 
 		}

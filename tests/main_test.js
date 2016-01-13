@@ -7,26 +7,49 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
+const rimraf = require('rimraf');
 const fs = require('fs');
 const path = require("path");
 
 const fixturesDir = path.join(__dirname, 'fixtures');
+const tmpIn = path.join(__dirname, 'tmp_in');
+const tmpOut = path.join(__dirname, 'tmp_out');
+
 const flow = require('kronos-flow');
 const inboundFile = require('kronos-adapter-inbound-file');
 const outboundFile = require('kronos-adapter-outbound-file');
 const archiveTar = require('kronos-step-archive-tar');
 
+const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
 
 const ksm = require('kronos-service-manager');
 
 
 describe('main', function () {
+
+	beforeEach(function () {
+		// Delete all the the 'volatile' directory
+		try {
+			rimraf.sync(tmpIn);
+			rimraf.sync(tmpOut);
+		} catch (err) {
+			console.log(err);
+		}
+		fs.mkdirSync(tmpIn);
+		fs.mkdirSync(tmpOut);
+	});
+
+
 	it('test', function (done) {
 
 
 		ksm.manager().then(function (manager) {
 				console.log('started');
 
+				// ---------------------------
+				// register all the interceptors
+				// ---------------------------
+				writeFileInterceptor.registerWithManager(manager);
 
 				// ---------------------------
 				// register all the steps
@@ -37,7 +60,7 @@ describe('main', function () {
 				flow.registerWithManager(manager);
 
 				// ---------------------------
-				// load the flows
+				// load the flow
 				// ---------------------------
 
 				const filePath = path.join(fixturesDir, 'main-flow.json');
@@ -51,9 +74,31 @@ describe('main', function () {
 
 				console.log('start the flow');
 
+				// ---------------------------
+				// Start the flow
+				// ---------------------------
 				myFlow.start().then(function (step) {
 					console.log('flow: started');
-					done();
+
+					// trigger the inbound file
+					let message = {
+						"info": {},
+						"hops": [],
+						"payload": {}
+					};
+					message.payload = path.join(fixturesDir, 'accounts.tar');
+
+					const sendEndpoint = myFlow.endpoints.inFileTrigger;
+					sendEndpoint.receive(message).then(res => {
+						console.log(res);
+						done();
+					}).catch(err => {
+						console.log(err);
+						done(err);
+					});
+
+
+
 				}).catch(function (err) {
 					console.log(err);
 				});

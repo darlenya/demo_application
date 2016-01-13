@@ -28,24 +28,23 @@
     "chai-as-promised": "^5.2.0",
     "istanbul": "^0.4.1",
     "mocha": "2.3.4",
-    "semantic-release": "6.0.3"
+    "semantic-release": "6.0.3",
+    "rimraf": "^2.5.0"
   },
-  "contributors": [
-    {
-      "name": "Torsten Link",
-      "email": "torstenlink@gmx.de"
-    },
-    {
-      "name": "Markus Felten",
-      "email": "markus.felten@gmx.de"
-    }
-  ],
+  "contributors": [{
+    "name": "Torsten Link",
+    "email": "torstenlink@gmx.de"
+  }, {
+    "name": "Markus Felten",
+    "email": "markus.felten@gmx.de"
+  }],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "kronos-adapter-inbound-file": "^1.0.2",
-    "kronos-adapter-outbound-file": "^1.0.8",
-    "kronos-flow": "^1.6.0",
+    "kronos-adapter-inbound-file": "^1.2.0",
+    "kronos-adapter-outbound-file": "^1.1.0",
+    "kronos-flow": "^1.6.2",
+    "kronos-interceptor": "^1.1.0",
     "kronos-service-manager": "^2.13.1",
-    "kronos-step-archive-tar": "^1.4.2"
+    "kronos-step-archive-tar": "^1.4.3"
   }
 }
