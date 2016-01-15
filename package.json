@@ -48,6 +48,6 @@
     "kronos-flow": "^1.6.2",
     "kronos-interceptor": "^1.2.2",
     "kronos-service-manager": "^2.13.1",
-    "kronos-step-archive-tar": "^1.4.3"
+    "kronos-step-archive-tar": "^1.5.0"
   }
 }
