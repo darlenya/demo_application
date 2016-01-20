@@ -9,6 +9,7 @@ const should = chai.should();
 
 const fs = require('fs');
 const path = require("path");
+const rimraf = require("rimraf");
 
 const fixturesDir = path.join(__dirname, 'fixtures');
 const flow = require('kronos-flow');
@@ -20,20 +21,23 @@ const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
 
 const ksm = require('kronos-service-manager');
 
+const tmpIn = path.join(fixturesDir, 'tmp_in');
+const tmpOut = path.join(fixturesDir, 'tmp_out');
+
 
 describe('main', function () {
 
-	// beforeEach(function () {
-	// 	// Delete all the the 'volatile' directory
-	// 	try {
-	// 		rimraf.sync(tmpIn);
-	// 		rimraf.sync(tmpOut);
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// 	fs.mkdirSync(tmpIn);
-	// 	fs.mkdirSync(tmpOut);
-	// });
+	beforeEach(function () {
+		// Delete all the the 'volatile' directory
+		try {
+			rimraf.sync(tmpIn);
+			rimraf.sync(tmpOut);
+		} catch (err) {
+			console.log(err);
+		}
+		fs.mkdirSync(tmpIn);
+		fs.mkdirSync(tmpOut);
+	});
 
 
 	it('test', function (done) {
