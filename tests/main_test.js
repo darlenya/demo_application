@@ -16,6 +16,7 @@ const inboundFile = require('kronos-adapter-inbound-file');
 const outboundFile = require('kronos-adapter-outbound-file');
 const archiveTar = require('kronos-step-archive-tar');
 
+const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
 
 const ksm = require('kronos-service-manager');
 
@@ -39,6 +40,11 @@ describe('main', function () {
 
 		ksm.manager().then(function (manager) {
 				console.log('started');
+
+				// ---------------------------
+				// register all the interceptors
+				// ---------------------------
+				writeFileInterceptor.registerWithManager(manager);
 
 				// ---------------------------
 				// register all the steps

@@ -26,7 +26,7 @@
 
 			"writeFile": {
 				"type": "kronos-adapter-outbound-file",
-				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo-main/tests/tmp_out",
+				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo_application/tests/tmp_out",
 				"endpoints": {
 					"inWriteFile": {
 						"interceptors": [{
