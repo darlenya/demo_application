@@ -85,10 +85,14 @@ describe('main', function () {
 
 					const sendEndpoint = myFlow.endpoints.inFileTrigger;
 					sendEndpoint.receive(message).then(res => {
+						console.log("---------- RESULT -------------");
 						console.log(res);
+						console.log("-------------------------------");
 						done();
 					}).catch(err => {
+						console.log("---------- ERROR --------------");
 						console.log(err);
+						console.log("-------------------------------");
 						done(err);
 					});
 				}).catch(function (err) {
