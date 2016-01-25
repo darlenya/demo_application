@@ -12,17 +12,26 @@ const path = require("path");
 const rimraf = require("rimraf");
 
 const fixturesDir = path.join(__dirname, 'fixtures');
+
+// ------ Steps ------
 const flow = require('kronos-flow');
 const inboundFile = require('kronos-adapter-inbound-file');
 const outboundFile = require('kronos-adapter-outbound-file');
 const archiveTar = require('kronos-step-archive-tar');
+const passThrough = require('kronos-step-passthrough');
 
+
+// ------ Interceptors ------
 const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
+const messageHandlerInterceptor = require('kronos-interceptor-message-handler');
+const lineParserInterceptor = require('kronos-interceptor-line-parser');
+const streamObj2String = require('kronos-interceptor-stream-obj2string');
+
 
 const ksm = require('kronos-service-manager');
 
-const tmpIn = path.join(fixturesDir, 'tmp_in');
-const tmpOut = path.join(fixturesDir, 'tmp_out');
+const tmpIn = path.join(__dirname, 'tmp_in');
+const tmpOut = path.join(__dirname, 'tmp_out');
 
 
 describe('main', function () {
@@ -46,17 +55,22 @@ describe('main', function () {
 				console.log('started');
 
 				// ---------------------------
-				// register all the interceptors
-				// ---------------------------
-				writeFileInterceptor.registerWithManager(manager);
-
-				// ---------------------------
 				// register all the steps
 				// ---------------------------
 				inboundFile.registerWithManager(manager);
 				outboundFile.registerWithManager(manager);
 				archiveTar.registerWithManager(manager);
+				passThrough.registerWithManager(manager);
 				flow.registerWithManager(manager);
+
+				// ---------------------------
+				// register all the interceptors
+				// ---------------------------
+				writeFileInterceptor.registerWithManager(manager);
+				messageHandlerInterceptor.registerWithManager(manager);
+				lineParserInterceptor.registerWithManager(manager);
+				streamObj2String.registerWithManager(manager);
+
 
 				// ---------------------------
 				// load the flows
@@ -90,7 +104,7 @@ describe('main', function () {
 					const sendEndpoint = myFlow.endpoints.inFileTrigger;
 					sendEndpoint.receive(message).then(res => {
 						console.log("---------- RESULT -------------");
-						console.log(res);
+						console.log("Success");
 						console.log("-------------------------------");
 						done();
 					}).catch(err => {

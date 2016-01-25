@@ -10,8 +10,18 @@
 			"readFile": {
 				"type": "kronos-adapter-inbound-file",
 				"onlyReadNewFiles": true,
+				"inFileTrigger": {
+					"interceptors": [{
+						"type": "message-handler"
+					}]
+				},
 				"endpoints": {
-					"out": "untar/in"
+					"out": {
+						"target": "untar/in",
+						"interceptors": [{
+							"type": "message-handler"
+						}]
+					}
 				}
 			},
 
@@ -19,9 +29,40 @@
 			"untar": {
 				"type": "kronos-untar",
 				"endpoints": {
-					"out": "writeFile/inWriteFile"
+					"out": {
+						"target": "dataProcessor/in",
+						"interceptors": [{
+							"type": "message-handler"
+						}]
+					}
 				}
 			},
+
+
+
+			"dataProcessor": {
+				"type": "kronos-step-passthrough",
+				"endpoints": {
+					"in": {
+						"interceptors": [{
+							"type": "message-handler"
+						}]
+					},
+					"out": {
+						"target": "writeFile/inWriteFile",
+						"interceptors": [{
+							"type": "line-parser",
+							"config": {
+								"allow_new_line_in_cell": true,
+								"line_separator": "\n",
+								"quote_char": "\"",
+								"skip_empty_lines": true
+							}
+						}]
+					}
+				}
+			},
+
 
 
 			"writeFile": {
@@ -30,6 +71,8 @@
 				"endpoints": {
 					"inWriteFile": {
 						"interceptors": [{
+							"type": "stream-obj-to-string"
+						}, {
 							"type": "write-file-interceptor"
 						}]
 					}
