@@ -31,13 +31,16 @@
     "semantic-release": "6.0.3",
     "rimraf": "^2.5.1"
   },
-  "contributors": [{
-    "name": "Torsten Link",
-    "email": "torstenlink@gmx.de"
-  }, {
-    "name": "Markus Felten",
-    "email": "markus.felten@gmx.de"
-  }],
+  "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
   "license": "BSD-2-Clause",
   "dependencies": {
     "kronos-adapter-inbound-file": "^1.2.3",
@@ -50,6 +53,6 @@
     "kronos-service-manager": "^2.14.0",
     "kronos-step": "^3.9.0",
     "kronos-step-archive-tar": "^1.5.0",
-    "kronos-step-passthrough": "^1.2.5"
+    "kronos-step-passthrough": "^1.2.6"
   }
 }
