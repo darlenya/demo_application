@@ -1,90 +1,25 @@
 {
-	"type": "data-processor-row",
-	"config": {
-		"nar_id": {
-			"fieldType": {
-				"type": "string",
-				"minLength": "5",
-				"maxLength": "10"
-			},
-			"mandatory": true,
-			"severity": "abort_file"
-		},
-		"account_name": {
-			"fieldType": {
-				"type": "string",
-				"minLength": "2",
-				"maxLength": "240"
-			},
-			"mandatory": true,
-			"severity": "abort_file"
-		},
-		"imported_owner": {
-			"fieldType": {
-				"type": "email",
-				"minLength": "5",
-				"maxLength": "64",
-				"fieldCase": "lower"
-			},
-			"mandatory": false,
+	"keyHashFields": ["account_name", "nar_id"],
+	"keyHashName": "_keyHash",
+	"contentHashFields": [
+		"imported_owner",
+		"first_name",
+		"last_name",
+		"account_type",
+		"owner",
+		"entitlements"
+	],
+	"contentHashName": "_contentHash",
+	"scopeFields": ["nar_id"],
+	"scopeHashName": "_scopeHash",
+
+	"multiRowFields": ["entitlements"],
+	"checks": {
+		"double_rows_same": {
 			"severity": "skip_field"
 		},
-		"first_name": {
-			"fieldType": {
-				"type": "string",
-				"maxLength": "64",
-			},
-			"mandatory": false,
+		"double_rows_different": {
 			"severity": "skip_field"
-		},
-		"last_name": {
-			"fieldType": {
-				"type": "string",
-				"maxLength": "64",
-			},
-			"mandatory": false,
-			"severity": "skip_field"
-		},
-		"last_login": {
-			"fieldType": {
-				"type": "date",
-				"minDate": "01.01.1980",
-				"maxDate": "01.01.2030"
-			},
-			"mandatory": false,
-			"severity": "skip_field"
-		},
-		"account_type": {
-			"fieldType": {
-				"type": "string",
-				"maxLength": "64",
-			},
-			"mandatory": false,
-			"severity": "skip_field"
-		},
-		"owner": {
-			"fieldType": {
-				"type": "string",
-				"minLength": "2",
-				"maxLength": "64",
-				"fieldCase": "lower"
-			},
-			"mandatory": false,
-			"severity": "skip_field"
-		},
-		"entitlements": {
-			"fieldType": {
-				"type": "string",
-				"maxLength": "240",
-			},
-			"mandatory": false,
-			"severity": "abort_file",
-			"delimiter": "|",
-			"escapeChar": "|",
-			"sortFields": true,
-			"uniqueFields": true,
-			"removeWhiteSpace": true,
-			"removeEmpty": true
 		}
 	}
 }
