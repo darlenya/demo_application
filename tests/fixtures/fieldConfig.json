@@ -1,7 +1,3 @@
-, {
-	"type": "line-tokens2obj"
-},
-
 {
 	"type": "data-processor-row",
 	"config": {
@@ -91,3 +87,4 @@
 			"removeEmpty": true
 		}
 	}
+}

@@ -29,8 +29,8 @@ const streamObj2String = require('kronos-interceptor-stream-obj2string');
 const csvTokenizer = require('kronos-interceptor-line-tokenizer-csv');
 const headerExtracter = require('kronos-interceptor-line-header');
 const token2Obj = require('kronos-interceptor-line-tokens2obj');
-// const dataProcessorRow = require('kronos-interceptor-object-data-processor-row');
-// const dataProcessorChunk = require('kronos-interceptor-object-data-processor-chunk');
+const dataProcessorRow = require('kronos-interceptor-object-data-processor-row');
+const dataProcessorChunk = require('kronos-interceptor-object-data-processor-chunk');
 
 
 
@@ -79,8 +79,8 @@ describe('main', function () {
 				csvTokenizer.registerWithManager(manager);
 				headerExtracter.registerWithManager(manager);
 				token2Obj.registerWithManager(manager);
-				// dataProcessorRow.registerWithManager(manager);
-				// dataProcessorChunk.registerWithManager(manager);
+				dataProcessorRow.registerWithManager(manager);
+				dataProcessorChunk.registerWithManager(manager);
 
 				// ---------------------------
 				// load the flows

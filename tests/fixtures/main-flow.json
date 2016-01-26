@@ -51,58 +51,151 @@
 					"out": {
 						"target": "writeFile/inWriteFile",
 						"interceptors": [{
-								"type": "line-parser",
-								"config": {
-									"allow_new_line_in_cell": true,
-									"line_separator": "\n",
-									"quote_char": "\"",
-									"skip_empty_lines": true
-								}
-							}, {
-								"type": "line-tokenizer-csv"
-							}, {
-								"type": "line-header",
-								"config": {
-									"expectedHeader": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
-										"account_type", "owner", "entitlements"
-									],
-									"fieldNames": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
-										"account_type", "owner", "entitlements"
-									],
-									"caseSensitive": true,
-									"strict": {
-										"val": true,
-										"severity": "skip_record"
+							"type": "line-parser",
+							"config": {
+								"allow_new_line_in_cell": true,
+								"line_separator": "\n",
+								"quote_char": "\"",
+								"skip_empty_lines": true
+							}
+						}, {
+							"type": "line-tokenizer-csv"
+						}, {
+							"type": "line-header",
+							"config": {
+								"expectedHeader": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
+									"account_type", "owner", "entitlements"
+								],
+								"fieldNames": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
+									"account_type", "owner", "entitlements"
+								],
+								"caseSensitive": true,
+								"strict": {
+									"val": true,
+									"severity": "skip_record"
+								},
+								"additionalColumns": false,
+								"missingColumns": false,
+								"mandatoryColumns": ["nar_id", "account_name", "entitlements"],
+								"severity": "abort_file"
+							}
+						}, {
+							"type": "line-tokens2obj"
+						}, {
+
+
+							"type": "data-processor-row",
+							"config": {
+								"nar_id": {
+									"fieldType": {
+										"type": "string",
+										"minLength": "5",
+										"maxLength": "10"
 									},
-									"additionalColumns": false,
-									"missingColumns": false,
-									"mandatoryColumns": ["nar_id", "account_name", "entitlements"],
+									"mandatory": true,
 									"severity": "abort_file"
+								},
+								"account_name": {
+									"fieldType": {
+										"type": "string",
+										"minLength": "2",
+										"maxLength": "240"
+									},
+									"mandatory": true,
+									"severity": "abort_file"
+								},
+								"imported_owner": {
+									"fieldType": {
+										"type": "email",
+										"minLength": "5",
+										"maxLength": "64",
+										"fieldCase": "lower"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"first_name": {
+									"fieldType": {
+										"type": "string",
+										"maxLength": "64"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"last_name": {
+									"fieldType": {
+										"type": "string",
+										"maxLength": "64"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"last_login": {
+									"fieldType": {
+										"type": "date",
+										"minDate": "01.01.1980",
+										"maxDate": "01.01.2030"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"account_type": {
+									"fieldType": {
+										"type": "string",
+										"maxLength": "64"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"owner": {
+									"fieldType": {
+										"type": "string",
+										"minLength": "2",
+										"maxLength": "64",
+										"fieldCase": "lower"
+									},
+									"mandatory": false,
+									"severity": "skip_field"
+								},
+								"entitlements": {
+									"fieldType": {
+										"type": "string",
+										"maxLength": "240"
+									},
+									"mandatory": false,
+									"severity": "abort_file",
+									"delimiter": "|",
+									"escapeChar": "|",
+									"sortFields": true,
+									"uniqueFields": true,
+									"removeWhiteSpace": true,
+									"removeEmpty": true
 								}
 							}
-						}
-					]
+
+
+						}]
+					}
+				}
+			},
+
+
+
+			"writeFile": {
+				"type": "kronos-adapter-outbound-file",
+				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo_application/tests/tmp_out",
+				"endpoints": {
+					"inWriteFile": {
+						"interceptors": [{
+							"type": "stream-obj-to-string"
+						}, {
+							"type": "write-file-interceptor"
+						}]
+					}
 				}
 			}
-		},
 
-
-
-		"writeFile": {
-			"type": "kronos-adapter-outbound-file",
-			"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo_application/tests/tmp_out",
-			"endpoints": {
-				"inWriteFile": {
-					"interceptors": [{
-						"type": "stream-obj-to-string"
-					}, {
-						"type": "write-file-interceptor"
-					}]
-				}
-			}
 		}
 
 	}
-
-}
 }
