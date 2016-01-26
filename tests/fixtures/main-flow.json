@@ -51,35 +51,58 @@
 					"out": {
 						"target": "writeFile/inWriteFile",
 						"interceptors": [{
-							"type": "line-parser",
-							"config": {
-								"allow_new_line_in_cell": true,
-								"line_separator": "\n",
-								"quote_char": "\"",
-								"skip_empty_lines": true
+								"type": "line-parser",
+								"config": {
+									"allow_new_line_in_cell": true,
+									"line_separator": "\n",
+									"quote_char": "\"",
+									"skip_empty_lines": true
+								}
+							}, {
+								"type": "line-tokenizer-csv"
+							}, {
+								"type": "line-header",
+								"config": {
+									"expectedHeader": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
+										"account_type", "owner", "entitlements"
+									],
+									"fieldNames": ["nar_id", "account_name", "imported_owner", "first_name", "last_name", "last_login",
+										"account_type", "owner", "entitlements"
+									],
+									"caseSensitive": true,
+									"strict": {
+										"val": true,
+										"severity": "skip_record"
+									},
+									"additionalColumns": false,
+									"missingColumns": false,
+									"mandatoryColumns": ["nar_id", "account_name", "entitlements"],
+									"severity": "abort_file"
+								}
 							}
-						}]
-					}
-				}
-			},
-
-
-
-			"writeFile": {
-				"type": "kronos-adapter-outbound-file",
-				"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo_application/tests/tmp_out",
-				"endpoints": {
-					"inWriteFile": {
-						"interceptors": [{
-							"type": "stream-obj-to-string"
-						}, {
-							"type": "write-file-interceptor"
-						}]
-					}
+						}
+					]
 				}
 			}
+		},
 
+
+
+		"writeFile": {
+			"type": "kronos-adapter-outbound-file",
+			"directory": "/Users/torstenlink/Documents/entwicklung/demo_application/demo_application/tests/tmp_out",
+			"endpoints": {
+				"inWriteFile": {
+					"interceptors": [{
+						"type": "stream-obj-to-string"
+					}, {
+						"type": "write-file-interceptor"
+					}]
+				}
+			}
 		}
 
 	}
+
+}
 }

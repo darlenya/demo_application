@@ -26,6 +26,12 @@ const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
 const messageHandlerInterceptor = require('kronos-interceptor-message-handler');
 const lineParserInterceptor = require('kronos-interceptor-line-parser');
 const streamObj2String = require('kronos-interceptor-stream-obj2string');
+const csvTokenizer = require('kronos-interceptor-line-tokenizer-csv');
+const headerExtracter = require('kronos-interceptor-line-header');
+const token2Obj = require('kronos-interceptor-line-tokens2obj');
+// const dataProcessorRow = require('kronos-interceptor-object-data-processor-row');
+// const dataProcessorChunk = require('kronos-interceptor-object-data-processor-chunk');
+
 
 
 const ksm = require('kronos-service-manager');
@@ -70,7 +76,11 @@ describe('main', function () {
 				messageHandlerInterceptor.registerWithManager(manager);
 				lineParserInterceptor.registerWithManager(manager);
 				streamObj2String.registerWithManager(manager);
-
+				csvTokenizer.registerWithManager(manager);
+				headerExtracter.registerWithManager(manager);
+				token2Obj.registerWithManager(manager);
+				// dataProcessorRow.registerWithManager(manager);
+				// dataProcessorChunk.registerWithManager(manager);
 
 				// ---------------------------
 				// load the flows
