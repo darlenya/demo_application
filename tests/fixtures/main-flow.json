@@ -164,12 +164,14 @@
 									},
 									"mandatory": false,
 									"severity": "abort_file",
-									"delimiter": "|",
-									"escapeChar": "|",
-									"sortFields": true,
-									"uniqueFields": true,
-									"removeWhiteSpace": true,
-									"removeEmpty": true
+									"multiField": {
+										"delimiter": "\\|",
+										"escapeChar": "\\|",
+										"sortFields": true,
+										"uniqueFields": true,
+										"removeWhiteSpace": true,
+										"removeEmpty": true
+									}
 								}
 							}
 

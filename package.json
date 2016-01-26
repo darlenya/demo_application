@@ -50,7 +50,7 @@
     "kronos-interceptor-line-tokens2obj": "^1.1.2",
     "kronos-interceptor-message-handler": "^1.0.2",
     "kronos-interceptor-object-data-processor-chunk": "^1.1.2",
-    "kronos-interceptor-object-data-processor-row": "^1.1.3",
+    "kronos-interceptor-object-data-processor-row": "^1.1.4",
     "kronos-interceptor-stream-obj2string": "^1.0.2",
     "kronos-service-manager": "^2.14.0",
     "kronos-step": "^3.9.0",
