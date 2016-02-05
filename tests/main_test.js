@@ -39,6 +39,36 @@ const ksm = require('kronos-service-manager');
 const tmpIn = path.join(__dirname, 'tmp_in');
 const tmpOut = path.join(__dirname, 'tmp_out');
 
+const managerPromise = ksm.manager().then(manager =>
+	Promise.all([
+
+		// ---------------------------
+		// register all the steps
+		// ---------------------------
+		inboundFile.registerWithManager(manager),
+		outboundFile.registerWithManager(manager),
+		archiveTar.registerWithManager(manager),
+		passThrough.registerWithManager(manager),
+		flow.registerWithManager(manager),
+
+		// ---------------------------
+		// register all the interceptors
+		// ---------------------------
+		writeFileInterceptor.registerWithManager(manager),
+
+		messageHandlerInterceptor.registerWithManager(manager),
+		lineParserInterceptor.registerWithManager(manager),
+		streamObj2String.registerWithManager(manager),
+		csvTokenizer.registerWithManager(manager),
+		headerExtracter.registerWithManager(manager),
+		token2Obj.registerWithManager(manager),
+		dataProcessorRow.registerWithManager(manager),
+		dataProcessorChunk.registerWithManager(manager)
+
+	]).then(() =>
+		Promise.resolve(manager)
+	));
+
 
 describe('main', function () {
 
@@ -55,43 +85,22 @@ describe('main', function () {
 	});
 
 
-	it('test', function (done) {
+	it('test', function () {
 
-		ksm.manager().then(function (manager) {
-				console.log('started');
+		return managerPromise.then(function (manager) {
+			console.log('started');
 
-				// ---------------------------
-				// register all the steps
-				// ---------------------------
-				inboundFile.registerWithManager(manager);
-				outboundFile.registerWithManager(manager);
-				archiveTar.registerWithManager(manager);
-				passThrough.registerWithManager(manager);
-				flow.registerWithManager(manager);
+			console.log(manager.interceptors);
 
-				// ---------------------------
-				// register all the interceptors
-				// ---------------------------
-				writeFileInterceptor.registerWithManager(manager);
-				messageHandlerInterceptor.registerWithManager(manager);
-				lineParserInterceptor.registerWithManager(manager);
-				streamObj2String.registerWithManager(manager);
-				csvTokenizer.registerWithManager(manager);
-				headerExtracter.registerWithManager(manager);
-				token2Obj.registerWithManager(manager);
-				dataProcessorRow.registerWithManager(manager);
-				dataProcessorChunk.registerWithManager(manager);
+			// ---------------------------
+			// load the flows
+			// ---------------------------
 
-				// ---------------------------
-				// load the flows
-				// ---------------------------
+			const filePath = path.join(fixturesDir, 'main-flow.json');
+			const fileContent = fs.readFileSync(filePath, 'utf8');
+			const flowDefintion = JSON.parse(fileContent);
 
-				const filePath = path.join(fixturesDir, 'main-flow.json');
-				const fileContent = fs.readFileSync(filePath, 'utf8');
-				const flowDefintion = JSON.parse(fileContent);
-
-				flow.loadFlows(manager, manager.scopeReporter, flowDefintion);
-
+			return flow.loadFlows(manager, flowDefintion).then(() => {
 				// get the flow from the manager
 				const myFlow = manager.flows['untar-applications'];
 
@@ -112,27 +121,24 @@ describe('main', function () {
 					message.payload = path.join(fixturesDir, 'accounts.tar');
 
 					const sendEndpoint = myFlow.endpoints.inFileTrigger;
-					sendEndpoint.receive(message).then(res => {
+					return sendEndpoint.receive(message).then(res => {
 						console.log("---------- RESULT -------------");
 						console.log("Success");
 						console.log("-------------------------------");
-						done();
+						return Promise.reslove("OK");
 					}).catch(err => {
 						console.log("---------- ERROR --------------");
 						console.log(err);
 						console.log("-------------------------------");
-						done(err);
+						return Promise.reject(err);
 					});
-				}).catch(function (err) {
-					console.log(err);
 				});
 
-
-
-			},
-			function (err) {
-				console.log(err);
 			});
+
+
+
+		});
 
 	});
 });
