@@ -13,6 +13,12 @@ const rimraf = require("rimraf");
 
 const fixturesDir = path.join(__dirname, 'fixtures');
 
+const ksm = require('kronos-service-manager');
+
+const tmpIn = path.join(__dirname, 'tmp_in');
+const tmpOut = path.join(__dirname, 'tmp_out');
+
+
 // ------ Steps ------
 const flow = require('kronos-flow');
 const inboundFile = require('kronos-adapter-inbound-file');
@@ -32,12 +38,6 @@ const token2Obj = require('kronos-interceptor-line-tokens2obj');
 const dataProcessorRow = require('kronos-interceptor-object-data-processor-row');
 const dataProcessorChunk = require('kronos-interceptor-object-data-processor-chunk');
 
-
-
-const ksm = require('kronos-service-manager');
-
-const tmpIn = path.join(__dirname, 'tmp_in');
-const tmpOut = path.join(__dirname, 'tmp_out');
 
 const managerPromise = ksm.manager().then(manager =>
 	Promise.all([
@@ -96,7 +96,7 @@ describe('main', function () {
 			// load the flows
 			// ---------------------------
 
-			const filePath = path.join(fixturesDir, 'main-flow.json');
+			const filePath = path.join(fixturesDir, 'file-extract-check_flow.json');
 			const fileContent = fs.readFileSync(filePath, 'utf8');
 			const flowDefintion = JSON.parse(fileContent);
 

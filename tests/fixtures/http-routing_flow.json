@@ -1,0 +1,23 @@
+{
+	"http-routing-flow": {
+		"description": "Untars the TAR-Ball containing all the application files",
+
+		"steps": {
+
+			"adapterInboundHttp": {
+				"type": "kronos-http-routing-step",
+
+				"endpoints": {
+					"fileReaderTar": {
+						"method": "post",
+						"path": "/file/tar"
+					}
+				}
+			}
+
+
+
+		}
+
+	}
+}
