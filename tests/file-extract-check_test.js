@@ -125,7 +125,7 @@ describe('main', function () {
 					const sendEndpoint = myFlow.endpoints.inFileTrigger;
 
 					console.log("Message:");
-					console.log(message);
+					console.log(sendEndpoint.step.name);
 
 					return sendEndpoint.receive(message).then(res => {
 						console.log("---------- RESULT -------------");
