@@ -13,6 +13,8 @@
 				"inFileTrigger": {
 					"interceptors": [{
 						"type": "message-handler"
+					}, {
+						"type": "debug-log-interceptor"
 					}]
 				},
 				"endpoints": {
@@ -20,6 +22,8 @@
 						"target": "untar/in",
 						"interceptors": [{
 							"type": "message-handler"
+						}, {
+							"type": "debug-log-interceptor"
 						}]
 					}
 				}
@@ -33,6 +37,8 @@
 						"target": "dataProcessor/in",
 						"interceptors": [{
 							"type": "message-handler"
+						}, {
+							"type": "debug-log-interceptor"
 						}]
 					}
 				}
@@ -46,6 +52,8 @@
 					"in": {
 						"interceptors": [{
 							"type": "message-handler"
+						}, {
+							"type": "debug-log-interceptor"
 						}]
 					},
 					"out": {
@@ -203,7 +211,9 @@
 								}
 							}
 
-
+							, {
+								"type": "debug-log-interceptor"
+							}
 						]
 					}
 				}

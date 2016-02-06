@@ -28,6 +28,7 @@ const passThrough = require('kronos-step-passthrough');
 
 
 // ------ Interceptors ------
+const debugLogInterceptor = require('../lib/debug-log-interceptor.js');
 const writeFileInterceptor = require('../lib/writeFile-interceptor.js');
 const messageHandlerInterceptor = require('kronos-interceptor-message-handler');
 const lineParserInterceptor = require('kronos-interceptor-line-parser');
@@ -54,6 +55,7 @@ const managerPromise = ksm.manager().then(manager =>
 		// ---------------------------
 		// register all the interceptors
 		// ---------------------------
+		debugLogInterceptor.registerWithManager(manager),
 		writeFileInterceptor.registerWithManager(manager),
 
 		messageHandlerInterceptor.registerWithManager(manager),
@@ -121,6 +123,10 @@ describe('main', function () {
 					message.payload = path.join(fixturesDir, 'accounts.tar');
 
 					const sendEndpoint = myFlow.endpoints.inFileTrigger;
+
+					console.log("Message:");
+					console.log(message);
+
 					return sendEndpoint.receive(message).then(res => {
 						console.log("---------- RESULT -------------");
 						console.log("Success");
