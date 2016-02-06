@@ -31,13 +31,16 @@
     "semantic-release": "6.0.3",
     "rimraf": "^2.5.1"
   },
-  "contributors": [{
-    "name": "Torsten Link",
-    "email": "torstenlink@gmx.de"
-  }, {
-    "name": "Markus Felten",
-    "email": "markus.felten@gmx.de"
-  }],
+  "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
   "license": "BSD-2-Clause",
   "dependencies": {
     "kronos-adapter-inbound-file": "^2.0.0",
@@ -49,7 +52,7 @@
     "kronos-interceptor-line-tokenizer-csv": "^2.0.2",
     "kronos-interceptor-line-tokens2obj": "^2.0.2",
     "kronos-interceptor-message-handler": "^2.0.0",
-    "kronos-interceptor-object-data-processor-chunk": "^2.0.4",
+    "kronos-interceptor-object-data-processor-chunk": "^2.0.5",
     "kronos-interceptor-object-data-processor-row": "^1.2.5",
     "kronos-interceptor-stream-obj2string": "^2.0.4",
     "kronos-service-manager": "^3.2.4",
