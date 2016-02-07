@@ -61,7 +61,7 @@
     "kronos-interceptor-stream-obj2string": "^2.0.5",
     "kronos-service-koa": "^2.3.1",
     "kronos-service-manager": "^3.2.4",
-    "kronos-step": "^4.0.2",
+    "kronos-step": "^4.0.3",
     "kronos-step-archive-tar": "^2.0.0",
     "kronos-step-passthrough": "^2.0.0"
   }
