@@ -5,16 +5,21 @@
 		"steps": {
 
 			"adapterInboundHttp": {
-				"type": "kronos-http-routing-step",
-
+				"type": "kronos-http-routing",
+				"listener": "my_koa_service",
 				"endpoints": {
 					"fileReaderTar": {
 						"method": "post",
-						"path": "/file/tar"
+						"path": "/file/tar",
+						"target": "debugStep/in",
+						"out": true
 					}
 				}
-			}
+			},
 
+			"debugStep": {
+				"type": "debug-step"
+			}
 
 
 		}

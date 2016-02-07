@@ -10,6 +10,7 @@ const should = chai.should();
 const fs = require('fs');
 const path = require("path");
 const rimraf = require("rimraf");
+const request = require("supertest-as-promised")(Promise);
 
 const fixturesDir = path.join(__dirname, 'fixtures');
 
@@ -19,8 +20,13 @@ const tmpIn = path.join(__dirname, 'tmp_in');
 const tmpOut = path.join(__dirname, 'tmp_out');
 
 // ------ Steps ------
+const debugStep = require('../lib/debug-step');
 const flow = require('kronos-flow');
 const httpRouting = require('kronos-http-routing-step');
+
+// ------ Services ------
+const koaService = require('kronos-service-koa');
+
 
 const managerPromise = ksm.manager().then(manager =>
 	Promise.all([
@@ -28,12 +34,18 @@ const managerPromise = ksm.manager().then(manager =>
 		// ---------------------------
 		// register all the steps
 		// ---------------------------
+		debugStep.registerWithManager(manager),
 		flow.registerWithManager(manager),
 		httpRouting.registerWithManager(manager),
 
 		// ---------------------------
 		// register all the interceptors
 		// ---------------------------
+
+		// ---------------------------
+		// register all the services
+		// ---------------------------
+		koaService.registerWithManager(manager),
 
 	]).then(() =>
 		Promise.resolve(manager)
@@ -79,31 +91,36 @@ describe('main', function () {
 				// ---------------------------
 				// Start the flow
 				// ---------------------------
-				myFlow.start().then(function (step) {
+				return myFlow.start().then(function (step) {
 					console.log('flow: started');
 
-					// // trigger the inbound file
-					// let message = {
-					// 	"info": {},
-					// 	"hops": [],
-					// 	"payload": {}
-					// };
-					// message.payload = path.join(fixturesDir, 'accounts.tar');
-					//
-					// const sendEndpoint = myFlow.endpoints.inFileTrigger;
-					// return sendEndpoint.receive(message).then(res => {
-					// 	console.log("---------- RESULT -------------");
-					// 	console.log("Success");
-					// 	console.log("-------------------------------");
-					// 	return Promise.reslove("OK");
-					// }).catch(err => {
-					// 	console.log("---------- ERROR --------------");
-					// 	console.log(err);
-					// 	console.log("-------------------------------");
-					// 	return Promise.reject(err);
-					// });
-				});
+					// get host and port
+					const httpServer = manager.services.my_koa_service.server;
+					const host = httpServer.address().address;
+					const port = httpServer.address().port;
 
+					console.log(`Host: ${host}`);
+					console.log(`Port: ${port}`);
+
+
+					return request(`${host}:${port}`)
+						.post('/file/tar')
+						.send({
+							name: 'Manny',
+							species: 'cat'
+						})
+						.set('X-API-Key', 'foobar')
+						.set('Accept', 'application/json')
+						.expect(200)
+						.then(res => {
+							console.log('---------- Result -----------');
+							//console.log(res);
+							return Promise.resolve("OK");
+						});
+
+
+
+				});
 			});
 
 
