@@ -12,17 +12,20 @@
 						"method": "post",
 						"path": "/file/tar",
 						"target": "debugStep/in",
-						"out": true
+						"out": true,
+						"interceptors": [{
+							"type": "http-request-post-json"
+						}]
 					}
 				}
 			},
 
+
 			"debugStep": {
 				"type": "debug-step"
 			}
-
-
 		}
 
 	}
+
 }

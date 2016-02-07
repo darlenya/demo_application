@@ -24,6 +24,10 @@ const debugStep = require('../lib/debug-step');
 const flow = require('kronos-flow');
 const httpRouting = require('kronos-http-routing-step');
 
+// ---- interceptors ----
+const httpInterceptors = require('kronos-interceptor-http-request');
+
+
 // ------ Services ------
 const koaService = require('kronos-service-koa');
 
@@ -41,6 +45,7 @@ const managerPromise = ksm.manager().then(manager =>
 		// ---------------------------
 		// register all the interceptors
 		// ---------------------------
+		httpInterceptors.registerWithManager(manager),
 
 		// ---------------------------
 		// register all the services
@@ -94,6 +99,9 @@ describe('main', function () {
 				return myFlow.start().then(function (step) {
 					console.log('flow: started');
 
+					const httpRoutingStep = step.steps.get('adapterInboundHttp');
+					console.log(httpRoutingStep.endpoints.fileReaderTar.interceptors);
+
 					// get host and port
 					const httpServer = manager.services.my_koa_service.server;
 					const host = httpServer.address().address;
@@ -111,13 +119,30 @@ describe('main', function () {
 						})
 						.set('X-API-Key', 'foobar')
 						.set('Accept', 'application/json')
+						// .field('name', 'my awesome avatar')
+						// .field('last_name', 'my last awesome avatar')
 						.expect(200)
 						.then(res => {
 							console.log('---------- Result -----------');
-							//console.log(res);
+							console.log(res.header);
+							console.log(res.body);
 							return Promise.resolve("OK");
 						});
 
+					// return request(`${host}:${port}`)
+					// 	.post('/file/tar')
+					// 	.send({
+					// 		name: 'Manny',
+					// 		species: 'cat'
+					// 	})
+					// 	.set('X-API-Key', 'foobar')
+					// 	.set('Accept', 'application/json')
+					// 	.expect(200)
+					// 	.then(res => {
+					// 		console.log('---------- Result -----------');
+					// 		//console.log(res);
+					// 		return Promise.resolve("OK");
+					// 	});
 
 
 				});

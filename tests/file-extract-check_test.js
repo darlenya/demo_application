@@ -131,7 +131,7 @@ describe('main', function () {
 						console.log("---------- RESULT -------------");
 						console.log("Success");
 						console.log("-------------------------------");
-						return Promise.reslove("OK");
+						return Promise.resolve("OK");
 					}).catch(err => {
 						console.log("---------- ERROR --------------");
 						console.log(err);
