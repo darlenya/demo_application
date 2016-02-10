@@ -1,0 +1,45 @@
+{
+	"http-routing-flow": {
+		"description": "Untars the TAR-Ball containing all the application files",
+
+		"steps": {
+
+			"loadBalancer": {
+				"type": "kronos-adapter-outbound-loadbalancer",
+				"endpoints": {
+					"in": {
+						"interceptors": [{
+							"type": "transport-send-mutipart"
+						}]
+					}
+				}
+			},
+
+
+
+			"adapterInboundHttp": {
+				"type": "kronos-http-routing",
+				"listener": "my_koa_service",
+				"inbound": true,
+				"endpoints": {
+					"fileReaderTar": {
+						"method": "post",
+						"path": "/file/tar",
+						"target": "debugStep/in",
+						"out": true,
+						"interceptors": [{
+							"type": "transport-receive-mutipart"
+						}]
+					}
+				}
+			},
+
+
+			"debugStep": {
+				"type": "debug-step"
+			}
+		}
+
+	}
+
+}
