@@ -63,7 +63,7 @@
     "kronos-service-koa": "^2.16.5",
     "kronos-service-manager": "^3.3.9",
     "kronos-step": "^5.2.2",
-    "kronos-step-archive-tar": "^2.0.6",
+    "kronos-step-archive-tar": "^2.0.7",
     "kronos-step-passthrough": "^2.0.7"
   }
 }
