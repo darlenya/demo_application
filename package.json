@@ -27,7 +27,7 @@
     "chai": "3.5.0",
     "chai-as-promised": "^5.3.0",
     "istanbul": "^0.4.3",
-    "kronos-endpoint": "^2.11.0",
+    "kronos-endpoint": "^2.12.0",
     "mocha": "2.5.2",
     "rimraf": "^2.5.2",
     "semantic-release": "6.0.3",
