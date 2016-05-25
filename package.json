@@ -47,7 +47,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "kronos-adapter-inbound-file": "^2.0.8",
-    "kronos-adapter-outbound-file": "^2.0.6",
+    "kronos-adapter-outbound-file": "^2.0.7",
     "kronos-flow": "^2.5.21",
     "kronos-http-routing-step": "^4.3.10",
     "kronos-interceptor": "^2.0.1",
