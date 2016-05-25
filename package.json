@@ -64,6 +64,6 @@
     "kronos-service-manager": "^3.4.0",
     "kronos-step": "^5.3.2",
     "kronos-step-archive-tar": "^2.0.10",
-    "kronos-step-passthrough": "^2.0.11"
+    "kronos-step-passthrough": "^2.0.12"
   }
 }
