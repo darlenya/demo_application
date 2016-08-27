@@ -60,7 +60,7 @@
     "kronos-interceptor-object-data-processor-chunk": "^2.0.5",
     "kronos-interceptor-object-data-processor-row": "^1.2.7",
     "kronos-interceptor-stream-obj2string": "^2.0.6",
-    "kronos-service-koa": "^3.0.1",
+    "kronos-service-koa": "^3.0.2",
     "kronos-service-manager": "^3.4.13",
     "kronos-step": "^5.3.4",
     "kronos-step-archive-tar": "^2.0.10",
