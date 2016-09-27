@@ -28,7 +28,7 @@
     "chai-as-promised": "^5.3.0",
     "istanbul": "^0.4.5",
     "kronos-endpoint": "^2.13.4",
-    "mocha": "3.0.2",
+    "mocha": "3.1.0",
     "rimraf": "^2.5.4",
     "semantic-release": "6.0.3",
     "supertest": "^2.0.0",
