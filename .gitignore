@@ -1,2 +1,13 @@
+coverage
 node_modules
+build
+dist
+out
+*.log
+*.dump
+.DS_Store
+.nyc_output
+.test
+.tmp
+
 tests/tmp_out
