@@ -7,10 +7,15 @@
   ],
   "main": "index.js",
   "scripts": {
-    "cover": "node ./node_modules/istanbul/lib/cli.js cover --hook-run-in-context ./node_modules/mocha/bin/_mocha -- --R spec --U exports tests",
+    "cover": "nyc npm test",
     "doc": "jsdoc lib/*.js",
     "test": "mocha tests/*_test.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "precover": "npm run prepublish",
+    "pretest": "npm run prepublish",
+    "posttest": "markdown-doctest",
+    "prepublish": "rollup --output=index.js -c -- {{module}}",
+    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md"
   },
   "repository": {
     "type": "git",
@@ -21,18 +26,22 @@
   },
   "homepage": "https://github.com/Kronos-Integration/demo_application#readme",
   "engines": {
-    "node": ">=4.2.1"
+    "node": ">=7.9.0"
   },
   "devDependencies": {
-    "chai": "3.5.0",
+    "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "istanbul": "^0.4.5",
     "kronos-endpoint": "^2.14.11",
-    "mocha": "3.1.2",
+    "mocha": "^3.2.0",
     "rimraf": "^2.6.1",
-    "semantic-release": "6.3.2",
+    "semantic-release": "^6.3.6",
     "supertest": "^3.0.0",
-    "supertest-as-promised": "^4.0.2"
+    "supertest-as-promised": "^4.0.2",
+    "cz-conventional-changelog": "^2.0.0",
+    "jsdoc-to-markdown": "^3.0.0",
+    "markdown-doctest": "^0.9.1",
+    "nyc": "^10.2.0",
+    "rollup": "^0.41.6"
   },
   "contributors": [
     {
@@ -65,5 +74,24 @@
     "kronos-step": "^5.3.6",
     "kronos-step-archive-tar": "^2.0.11",
     "kronos-step-passthrough": "^2.0.15"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "include": [
+      "dist/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
+    "report-dir": "./coverage"
+  },
+  "template": {
+    "repository": {
+      "url": "https://github.com/Kronos-Tools/npm-package-template.git"
+    }
   }
 }
