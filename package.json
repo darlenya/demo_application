@@ -32,7 +32,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "kronos-endpoint": "^2.14.11",
-    "mocha": "^3.4.1",
+    "mocha": "^3.4.2",
     "rimraf": "^2.6.1",
     "semantic-release": "^6.3.6",
     "supertest": "^3.0.0",
