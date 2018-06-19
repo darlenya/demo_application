@@ -14,8 +14,9 @@
     "precover": "npm run prepublish",
     "pretest": "npm run prepublish",
     "posttest": "markdown-doctest",
-    "prepublish": "rollup --output=index.js -c -- {{module}}",
-    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md"
+    "prepublish": "npm run snyk-protect; rollup --output=index.js -c -- {{module}}",
+    "docs": "jsdoc2md -l off -t doc/README.hbs -f src/*.js >README.md",
+    "snyk-protect": "snyk protect"
   },
   "repository": {
     "type": "git",
@@ -69,11 +70,12 @@
     "kronos-interceptor-object-data-processor-chunk": "^2.1.5",
     "kronos-interceptor-object-data-processor-row": "^1.2.8",
     "kronos-interceptor-stream-obj2string": "^2.0.14",
-    "kronos-service-koa": "^3.3.10",
+    "kronos-service-koa": "^4.0.1",
     "kronos-service-manager": "^3.5.9",
     "kronos-step": "^5.3.6",
     "kronos-step-archive-tar": "^2.0.13",
-    "kronos-step-passthrough": "^2.0.15"
+    "kronos-step-passthrough": "^2.0.15",
+    "snyk": "^1.83.0"
   },
   "config": {
     "commitizen": {
@@ -93,5 +95,6 @@
     "repository": {
       "url": "https://github.com/Kronos-Tools/npm-package-template.git"
     }
-  }
+  },
+  "snyk": true
 }
